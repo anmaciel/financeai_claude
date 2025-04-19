@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:financeai/core/constants/category_types.dart';
+import 'package:financeai/core/utils/log_util.dart';
 import 'package:financeai/data/daos/category_dao.dart';
 import 'package:financeai/data/database/database_helper.dart';
 import 'package:financeai/data/models/category.dart';
@@ -22,12 +23,12 @@ class CategoryRepository {
   /// Initializes the repository and database
   Future<void> initialize() async {
     if (_isInitialized) return;
-    
+
     _categoryDao = await _databaseHelper.getCategoryDao();
-    
+
     // Load default categories if needed
     await _loadDefaultCategoriesIfNeeded();
-    
+
     _isInitialized = true;
   }
 
@@ -50,20 +51,20 @@ class CategoryRepository {
     try {
       final String jsonContent = await rootBundle.loadString(assetPath);
       final List<dynamic> categoryList = json.decode(jsonContent);
-      
+
       // Process top-level categories and subcategories
       List<Category> allCategories = [];
-      
+
       for (var topCat in categoryList) {
         final mainCategory = _processCategory(topCat);
         allCategories.add(mainCategory);
-        
+
         // Process subcategories if they exist
         if (topCat['subcategorias'] != null) {
           for (var subCat in topCat['subcategorias']) {
             final subCategory = _processCategory(subCat, parentId: mainCategory.id);
             allCategories.add(subCategory);
-            
+
             // Process third-level subcategories if they exist
             if (subCat['subcategorias'] != null) {
               for (var thirdCat in subCat['subcategorias']) {
@@ -77,25 +78,25 @@ class CategoryRepository {
 
       await _categoryDao.insertCategories(allCategories);
     } catch (e) {
-      print('Error loading default categories: $e');
+      debugLog(message: 'Error loading default categories: $e');
     }
   }
-  
+
   /// Process a category from JSON format into a Category object
   Category _processCategory(Map<String, dynamic> json, {String? parentId}) {
     final String id = json['id'] ?? _uuid.v4();
     final String name = json['nome'] ?? '';
     final String rawType = json['tipo'] ?? 'despesa';
-    
+
     // Convert tipo string to CategoryType enum
-    final CategoryType type = rawType.toLowerCase() == 'receita' 
-        ? CategoryType.INCOME 
+    final CategoryType type = rawType.toLowerCase() == 'receita'
+        ? CategoryType.INCOME
         : CategoryType.EXPENSE;
-    
+
     final String color = json['color'] ?? '#CCCCCC';
     final String icon = json['icon_name'] ?? 'category';
     final bool isDefault = json['is_fixed'] == 1;
-    
+
     return Category(
       id: id,
       name: name,
@@ -135,7 +136,7 @@ class CategoryRepository {
       await _categoryDao.insert(newCategory);
       return true;
     } catch (e) {
-      print('Error creating category: $e');
+      debugLog(message: 'Error creating category: $e');
       return false;
     }
   }
@@ -147,7 +148,7 @@ class CategoryRepository {
       await _categoryDao.update(category);
       return true;
     } catch (e) {
-      print('Error updating category: $e');
+      debugLog(message: 'Error updating category: $e');
       return false;
     }
   }
@@ -161,11 +162,11 @@ class CategoryRepository {
       if (category != null && category.isDefault) {
         return false; // Cannot delete default categories
       }
-      
+
       await _categoryDao.delete(id);
       return true;
     } catch (e) {
-      print('Error deleting category: $e');
+      debugLog(message: 'Error deleting category: $e');
       return false;
     }
   }

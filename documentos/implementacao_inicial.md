@@ -34,21 +34,25 @@ Implementamos a estrutura básica do projeto FinanceAI, seguindo a arquitetura l
 ## Arquitetura Implementada
 
 ### Camada de Dados
+
 - **Models**: Representação dos dados para persistência
 - **Data Sources**: Acesso direto ao banco de dados
 - **Repositories**: Implementação concreta dos repositórios
 
 ### Camada de Domínio
+
 - **Entities**: Representação dos conceitos do negócio
 - **Repositories**: Interfaces para acesso aos dados
 - **Use Cases**: Regras de negócio específicas
 
 ### Camada de Apresentação
+
 - **States**: Estados imutáveis para a UI
 - **ViewModels**: Lógica de apresentação com Riverpod
 - **Screens**: Componentes visuais do Flutter
 
 ### Injeção de Dependência
+
 - **Providers**: Configuração das dependências com Riverpod
 
 ## Trabalho Necessário Para Concluir
@@ -102,13 +106,13 @@ Para completar a implementação do aplicativo, ainda é necessário desenvolver
 ## Considerações Técnicas
 
 - **Tratamento de Erros**: Implementamos um sistema robusto de tratamento de erros com falhas específicas por domínio.
-  
+
 - **Validação de Dados**: A validação ocorre tanto nos Use Cases quanto nos ViewModels, garantindo uma camada dupla de segurança.
-  
+
 - **Estados Imutáveis**: Todos os estados são imutáveis, facilitando o rastreamento de mudanças e debugging.
-  
+
 - **Reatividade**: Utilizamos Riverpod para gerenciamento de estado reativo.
-  
+
 - **Testabilidade**: A arquitetura foi projetada para facilitar testes unitários, de integração e de UI.
 
 - **Escalabilidade**: A separação clara entre camadas permite adicionar novos recursos sem afetar os existentes.

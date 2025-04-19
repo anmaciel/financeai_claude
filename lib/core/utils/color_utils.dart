@@ -31,7 +31,7 @@ class ColorUtils {
   /// The resulting string starts with # and contains 8 characters (including alpha).
   /// For example, "#FFFF0000" for Colors.red.
   static String toHex(Color color) {
-    return '#${color.value.toRadixString(16).padLeft(8, '0').toUpperCase()}';
+    return '#${color.toARGB32().toRadixString(16).padLeft(8, '0').toUpperCase()}';
   }
 
   /// Returns a list of predefined colors for use in the application.
