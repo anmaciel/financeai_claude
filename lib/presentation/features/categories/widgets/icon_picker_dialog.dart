@@ -9,14 +9,14 @@ class IconPickerDialog extends StatelessWidget {
 
   /// Creates an IconPickerDialog
   const IconPickerDialog({
-    Key? key,
+    super.key,
     this.initialIconName,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
     final iconNames = IconConstants.getAllIconNames();
-    
+
     return Dialog(
       child: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -40,19 +40,19 @@ class IconPickerDialog extends StatelessWidget {
                 itemBuilder: (context, index) {
                   final iconName = iconNames[index];
                   final isSelected = iconName == initialIconName;
-                  
+
                   return InkWell(
                     onTap: () {
                       Navigator.of(context).pop(iconName);
                     },
                     child: CircleAvatar(
-                      backgroundColor: isSelected 
-                          ? Theme.of(context).colorScheme.primary 
+                      backgroundColor: isSelected
+                          ? Theme.of(context).colorScheme.primary
                           : Theme.of(context).colorScheme.surface,
                       child: Icon(
                         IconConstants.getIconData(iconName),
-                        color: isSelected 
-                            ? Theme.of(context).colorScheme.onPrimary 
+                        color: isSelected
+                            ? Theme.of(context).colorScheme.onPrimary
                             : Theme.of(context).colorScheme.onSurface,
                       ),
                     ),

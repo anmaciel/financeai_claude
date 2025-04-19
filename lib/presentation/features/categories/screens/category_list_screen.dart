@@ -9,12 +9,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 /// Screen that displays a list of categories and allows the user to add, edit, or delete them.
 class CategoryListScreen extends ConsumerWidget {
   /// Creates a CategoryListScreen
-  const CategoryListScreen({Key? key}) : super(key: key);
+  const CategoryListScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(categoryListViewModelProvider);
-    
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Categories'),
@@ -54,7 +54,7 @@ class CategoryListScreen extends ConsumerWidget {
       case CategoryListStatus.initial:
       case CategoryListStatus.loading:
         return const Center(child: CircularProgressIndicator());
-      
+
       case CategoryListStatus.error:
         return Center(
           child: Column(
@@ -73,14 +73,14 @@ class CategoryListScreen extends ConsumerWidget {
             ],
           ),
         );
-      
+
       case CategoryListStatus.success:
         if (state.categories.isEmpty) {
           return const Center(
             child: Text('No categories found. Add one by tapping the + button.'),
           );
         }
-        
+
         return ListView.builder(
           itemCount: state.categories.length,
           itemBuilder: (context, index) {
@@ -94,8 +94,8 @@ class CategoryListScreen extends ConsumerWidget {
   Widget _buildCategoryItem(BuildContext context, Category category, WidgetRef ref) {
     return Dismissible(
       key: Key(category.id),
-      direction: category.isDefault 
-          ? DismissDirection.none 
+      direction: category.isDefault
+          ? DismissDirection.none
           : DismissDirection.endToStart,
       background: Container(
         color: Colors.red,
@@ -108,7 +108,7 @@ class CategoryListScreen extends ConsumerWidget {
       ),
       confirmDismiss: (direction) async {
         if (category.isDefault) return false;
-        
+
         return await showDialog<bool>(
           context: context,
           builder: (context) => AlertDialog(
@@ -129,7 +129,7 @@ class CategoryListScreen extends ConsumerWidget {
       },
       onDismissed: (direction) {
         ref.read(categoryListViewModelProvider.notifier).deleteCategory(category.id);
-        
+
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text('${category.name} deleted'),

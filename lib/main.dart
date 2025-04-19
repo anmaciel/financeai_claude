@@ -11,7 +11,7 @@ void main() {
 /// The main application widget.
 class FinanceAIApp extends ConsumerWidget {
   /// Creates a FinanceAIApp.
-  const FinanceAIApp({Key? key}) : super(key: key);
+  const FinanceAIApp({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -43,7 +43,7 @@ class FinanceAIApp extends ConsumerWidget {
 /// A loading screen that waits for the repository to initialize.
 class InitialLoadingScreen extends ConsumerWidget {
   /// Creates an InitialLoadingScreen.
-  const InitialLoadingScreen({Key? key}) : super(key: key);
+  const InitialLoadingScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

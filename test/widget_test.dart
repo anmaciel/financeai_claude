@@ -2,12 +2,9 @@
 //
 // Verifies the basic functionality of the FinanceAI application.
 
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:financeai/data/models/category.dart';
 import 'package:financeai/core/constants/category_types.dart';
-import 'package:mockito/mockito.dart';
 
 void main() {
   group('FinanceAI Tests', () {

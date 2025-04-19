@@ -18,9 +18,9 @@ class CategoryFormScreen extends ConsumerStatefulWidget {
   /// If [category] is provided, the screen will be in edit mode.
   /// Otherwise, it will be in add mode.
   const CategoryFormScreen({
-    Key? key,
+    super.key,
     this.category,
-  }) : super(key: key);
+  });
 
   @override
   ConsumerState<CategoryFormScreen> createState() => _CategoryFormScreenState();
@@ -43,7 +43,7 @@ class _CategoryFormScreenState extends ConsumerState<CategoryFormScreen> {
 
   void _initializeFormValues() {
     _isEditing = widget.category != null;
-    
+
     if (_isEditing) {
       final category = widget.category!;
       _nameController.text = category.name;
@@ -126,18 +126,18 @@ class _CategoryFormScreenState extends ConsumerState<CategoryFormScreen> {
         const Text('Category Type'),
         const SizedBox(height: 8),
         SegmentedButton<CategoryType>(
-          segments: CategoryType.values.map((type) => 
+          segments: CategoryType.values.map((type) =>
             ButtonSegment<CategoryType>(
               value: type,
               label: Text(type.getLocalizedName(false)),
-              icon: Icon(type == CategoryType.INCOME 
-                ? Icons.arrow_upward 
+              icon: Icon(type == CategoryType.INCOME
+                ? Icons.arrow_upward
                 : Icons.arrow_downward),
             )
           ).toList(),
           selected: {_selectedType},
-          onSelectionChanged: _isDefault 
-              ? null 
+          onSelectionChanged: _isDefault
+              ? null
               : (Set<CategoryType> newSelection) {
                   setState(() {
                     _selectedType = newSelection.first;
@@ -222,7 +222,7 @@ class _CategoryFormScreenState extends ConsumerState<CategoryFormScreen> {
       context,
       initialIconName: _selectedIconName,
     );
-    
+
     if (selectedIcon != null) {
       setState(() {
         _selectedIconName = selectedIcon;

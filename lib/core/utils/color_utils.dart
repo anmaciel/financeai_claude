@@ -15,7 +15,7 @@ class ColorUtils {
 
     hexString = hexString.toUpperCase().replaceAll('#', '');
     if (hexString.length == 6) {
-      hexString = 'FF' + hexString;
+      hexString = 'FF$hexString';
     }
 
     try {
